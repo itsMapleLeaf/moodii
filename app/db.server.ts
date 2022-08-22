@@ -11,22 +11,12 @@ export async function upsertUser(
   twitterId: number,
   name: string,
 ): Promise<User> {
-  const { id } = await e
+  const upsertQuery = e
     .insert(e.User, { name, twitter_id: twitterId })
     .unlessConflict((user) => ({
       on: user.twitter_id,
-      else: e.update(user, () => ({
-        set: { name },
-      })),
+      else: e.select(user, () => ({ id: true })),
     }))
-    .run(client)
 
-  const user = await e
-    .select(e.User, (user) => ({
-      filter: e.op(user.id, "=", e.uuid(id)),
-      name: true,
-    }))
-    .run(client)
-
-  return user!
+  return e.select(upsertQuery, () => ({ name: true })).run(client)
 }
