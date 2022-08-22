@@ -11,11 +11,13 @@ import tailwindCss from "./tailwind.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "moodii",
+  description: "track how well you're feeling over time 💜",
   viewport: "width=device-width,initial-scale=1",
 })
 
 export const links: LinksFunction = () => [
+  { rel: "icon", href: "/favicon.png" },
   { rel: "stylesheet", href: tailwindCss },
   { rel: "stylesheet", href: "/fonts/fonts.css" },
 ]
