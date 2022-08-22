@@ -24,17 +24,14 @@ export default function Index() {
   )
 }
 
-const controlBorderClass = clsx`
-  border border-white rounded-lg
-`
+const controlBorderClass = clsx("border border-white rounded-lg")
 
-const clearButtonClass = clsx`
-  p-4 leading-none transition flex items-center justify-center gap-2 bg-transparent hover:bg-white/10
-`
+const clearButtonClass = clsx(
+  "p-4 leading-none transition flex items-center justify-center gap-2 bg-transparent hover:bg-white/10",
+)
 
-const outlineButtonClass = clsx`
-  ${controlBorderClass}
-  ${clearButtonClass}
-  hover:-translate-y-0.5
-  active:translate-y-0 active:opacity-75
-`
+const outlineButtonClass = clsx(
+  controlBorderClass,
+  clearButtonClass,
+  "hover:-translate-y-0.5 active:translate-y-0 active:opacity-75",
+)
