@@ -30,8 +30,21 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
+      <body className="h-full flex flex-col">
+        <div className="m-auto p-4">
+          <Outlet />
+        </div>
+        <footer className="p-2 text-center opacity-50 text-xs">
+          &copy; {new Date().getFullYear()}{" "}
+          <a
+            href="https://mapleleaf.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-b hover:border-b-0"
+          >
+            itsMapleLeaf
+          </a>
+        </footer>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
