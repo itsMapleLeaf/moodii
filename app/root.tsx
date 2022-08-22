@@ -10,10 +10,11 @@ import {
 import tailwindCss from "./tailwind.css"
 
 export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "moodii",
-  description: "track how well you're feeling over time 💜",
-  viewport: "width=device-width,initial-scale=1",
+  "charset": "utf-8",
+  "title": "moodii",
+  "description": "track how well you're feeling over time 💜",
+  "viewport": "width=device-width,initial-scale=1",
+  "theme-color": "#86198f",
 })
 
 export const links: LinksFunction = () => [
