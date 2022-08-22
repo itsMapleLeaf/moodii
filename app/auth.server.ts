@@ -25,11 +25,7 @@ authenticator.use(
       clientSecret: process.env.TWITTER_CLIENT_SECRET!,
       callbackURL: process.env.TWITTER_CALLBACK_URL!,
     },
-    async ({ profile }) => {
-      const user = await upsertUser(profile.id, profile.name)
-      console.log({ user })
-      return user
-    },
+    ({ profile }) => upsertUser(profile.id, profile.name),
   ),
   "twitter",
 )

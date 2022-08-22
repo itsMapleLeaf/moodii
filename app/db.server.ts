@@ -1,7 +1,10 @@
-import e from "dbschema/edgeql-js"
-import createClient from "edgedb"
+import { PrismaClient } from "@prisma/client"
 
-const client = createClient()
+declare global {
+  var prismaClient: PrismaClient | undefined
+}
+
+const prisma = (globalThis.prismaClient ??= new PrismaClient())
 
 export type User = {
   name: string
@@ -11,12 +14,8 @@ export async function upsertUser(
   twitterId: number,
   name: string,
 ): Promise<User> {
-  const upsertQuery = e
-    .insert(e.User, { name, twitter_id: twitterId })
-    .unlessConflict((user) => ({
-      on: user.twitter_id,
-      else: e.select(user, () => ({ id: true })),
-    }))
-
-  return e.select(upsertQuery, () => ({ name: true })).run(client)
+  return (
+    (await prisma.user.findUnique({ where: { twitterId } })) ??
+    (await prisma.user.create({ data: { twitterId, name } }))
+  )
 }
