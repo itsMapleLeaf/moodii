@@ -1,8 +1,8 @@
 import type { LoaderArgs } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
-import { authenticator } from "~/auth"
+import { authenticator } from "~/auth.server"
 
 export async function loader({ request }: LoaderArgs) {
-  await authenticator.authenticate("twitter", request)
-  return redirect("/")
+  return authenticator.authenticate("twitter", request, {
+    successRedirect: "/",
+  })
 }

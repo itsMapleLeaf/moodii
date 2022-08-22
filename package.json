@@ -2,6 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
+    "prepare": "edgeql-js",
     "dev": "run-p --print-label --race dev:*",
     "dev:remix": "remix dev",
     "dev:tailwind": "pnpm run tailwind --watch",
@@ -17,6 +18,7 @@
     "@remix-run/server-runtime": "^1.6.8",
     "@supabase/supabase-js": "2.0.0-rc.4",
     "clsx": "^1.2.1",
+    "edgedb": "^0.21.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
