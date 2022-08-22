@@ -3,6 +3,7 @@ import { Authenticator } from "remix-auth"
 import { TwitterStrategy } from "remix-auth-twitter"
 import type { User } from "./db.server"
 import { upsertUser } from "./db.server"
+import { env } from "./env"
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -11,7 +12,7 @@ export const sessionStorage = createCookieSessionStorage({
     path: "/",
     httpOnly: true,
     secrets: ["s3cr3t"],
-    secure: process.env.NODE_ENV === "production",
+    secure: env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 365,
   },
 })
@@ -21,9 +22,9 @@ export const authenticator = new Authenticator<User>(sessionStorage)
 authenticator.use(
   new TwitterStrategy(
     {
-      clientID: process.env.TWITTER_CLIENT_ID!,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
-      callbackURL: process.env.TWITTER_CALLBACK_URL!,
+      clientID: env.TWITTER_CLIENT_ID,
+      clientSecret: env.TWITTER_CLIENT_SECRET,
+      callbackURL: env.TWITTER_CALLBACK_URL,
     },
     ({ profile }) => upsertUser(profile.id, profile.name),
   ),
