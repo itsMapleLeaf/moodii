@@ -1,5 +1,6 @@
+import { Form } from "@remix-run/react"
 import clsx from "clsx"
-import { FiHeart, FiMail, FiTwitter } from "react-icons/fi"
+import { FiHeart, FiTwitter } from "react-icons/fi"
 
 export default function Index() {
   return (
@@ -11,22 +12,29 @@ export default function Index() {
         we don't always feel our best. moodii is a simple app to help you track
         how you're feeling over time. <FiHeart className="inline-block" />
       </p>
-      <div className="flex flex-col items-center gap-4">
-        <button className={buttonClass}>
-          <FiTwitter />
-          log in with twitter
-        </button>
-        <button className={buttonClass}>
-          <FiMail />
-          log in with magic link
-        </button>
+      <div className="flex flex-col items-center gap-4 w-full max-w-xs">
+        <Form method="post" action="/auth/twitter/login" className="contents">
+          <button className={outlineButtonClass}>
+            <FiTwitter />
+            log in with twitter
+          </button>
+        </Form>
       </div>
     </main>
   )
 }
 
-const buttonClass = clsx`
-  border border-white rounded-lg p-4 leading-none transition flex items-center justify-center gap-2
-  hover:-translate-y-0.5 hover:shadow-sm
+const controlBorderClass = clsx`
+  border border-white rounded-lg
+`
+
+const clearButtonClass = clsx`
+  p-4 leading-none transition flex items-center justify-center gap-2 bg-transparent hover:bg-white/10
+`
+
+const outlineButtonClass = clsx`
+  ${controlBorderClass}
+  ${clearButtonClass}
+  hover:-translate-y-0.5
   active:translate-y-0 active:opacity-75
 `

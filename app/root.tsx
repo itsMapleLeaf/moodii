@@ -31,7 +31,7 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full flex flex-col">
-        <div className="m-auto p-4">
+        <div className="m-auto p-6">
           <Outlet />
         </div>
         <footer className="p-2 text-center opacity-50 text-xs">
