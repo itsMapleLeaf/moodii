@@ -2,16 +2,11 @@ import { Form, useLoaderData } from "@remix-run/react"
 import type { LoaderArgs } from "@remix-run/server-runtime"
 import { json } from "@remix-run/server-runtime"
 import clsx from "clsx"
-import { FiHeart, FiTwitter } from "react-icons/fi"
-import { authenticator, sessionStorage } from "~/auth.server"
+import { FiHeart, FiLogOut, FiTwitter } from "react-icons/fi"
+import { authenticator } from "~/auth.server"
 
 export async function loader({ request }: LoaderArgs) {
-  console.log(request.headers)
-  console.log(
-    (await sessionStorage.getSession(request.headers.get("cookie"))).data,
-  )
   const user = await authenticator.isAuthenticated(request)
-  console.log(user)
   return json({ user })
 }
 
@@ -31,7 +26,7 @@ export default function Index() {
         </p>
         <div className="flex flex-col items-center gap-4 w-full max-w-xs">
           <Form method="post" action="/auth/twitter/login" className="contents">
-            <button className={outlineButtonClass}>
+            <button type="submit" className={outlineButtonClass}>
               <FiTwitter />
               log in with twitter
             </button>
@@ -41,7 +36,17 @@ export default function Index() {
     )
   }
 
-  return <p>hi, {user.name}!</p>
+  return (
+    <main className="flex flex-col items-center gap-4">
+      <p>hi, {user.name}!</p>
+      <Form method="post" action="/auth/logout" className="contents">
+        <button type="submit" className={outlineButtonClass}>
+          <FiLogOut />
+          log out
+        </button>
+      </Form>
+    </main>
+  )
 }
 
 const controlBorderClass = clsx("border border-white rounded-lg")
