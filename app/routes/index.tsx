@@ -35,7 +35,7 @@ export default function Index() {
         <Link to="/mood" className={outlineButtonClass}>
           <FiHeart /> add a mood
         </Link>
-        <Form action="/logout" method="post">
+        <Form action="/auth/logout" method="post">
           <button type="submit" className={outlineButtonClass}>
             <FiLogOut /> sign out
           </button>

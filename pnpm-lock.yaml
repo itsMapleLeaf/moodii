@@ -21,6 +21,7 @@ specifiers:
   react-icons: ^4.4.0
   react-use-measure: ^2.1.1
   remix-auth: ^3.2.2
+  remix-auth-socials: ^1.0.2
   remix-auth-twitter: ^0.1.0
   tailwindcss: ^3.1.8
   typescript: ^4.7.4
@@ -40,6 +41,7 @@ dependencies:
   react-icons: 4.4.0_react@18.2.0
   react-use-measure: 2.1.1_biqbaboplfbrettd7655fr4n2y
   remix-auth: 3.2.2_tdbhtcwx4xbhr2usxmpslwgiua
+  remix-auth-socials: 1.0.2_tdbhtcwx4xbhr2usxmpslwgiua
   remix-auth-twitter: 0.1.0_rtbrtge67al6ruvw3twdlwzhna
   zod: 3.18.0
 
@@ -6382,6 +6384,31 @@ packages:
       mdast-util-to-hast: 11.3.0
       unified: 10.1.2
     dev: true
+
+  /remix-auth-oauth2/1.3.0_tdbhtcwx4xbhr2usxmpslwgiua:
+    resolution: {integrity: sha512-vibb7jxzRmeTqkl2SORgTg5rZqSAt8VdAvz3JBJOAbjn1wScvEcHttAJDQHDhdtdDgJVaOjJ0K7QpQNEeZdi0A==}
+    peerDependencies:
+      '@remix-run/server-runtime': ^1.0.0
+    dependencies:
+      '@remix-run/server-runtime': 1.6.8_biqbaboplfbrettd7655fr4n2y
+      debug: 4.3.4
+      remix-auth: 3.2.2_tdbhtcwx4xbhr2usxmpslwgiua
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@remix-run/react'
+      - supports-color
+    dev: false
+
+  /remix-auth-socials/1.0.2_tdbhtcwx4xbhr2usxmpslwgiua:
+    resolution: {integrity: sha512-X0/tK3DI16R5XsOy2qKhgKa66NdoTcRLiUH5c5PFvBzetbogdX+7j/jgGFDa/t8Tf5nHUD1PlYN3LpR8CA8LgA==}
+    dependencies:
+      remix-auth: 3.2.2_tdbhtcwx4xbhr2usxmpslwgiua
+      remix-auth-oauth2: 1.3.0_tdbhtcwx4xbhr2usxmpslwgiua
+    transitivePeerDependencies:
+      - '@remix-run/react'
+      - '@remix-run/server-runtime'
+      - supports-color
+    dev: false
 
   /remix-auth-twitter/0.1.0_rtbrtge67al6ruvw3twdlwzhna:
     resolution: {integrity: sha512-g4dzB8mOF8yunMjpENbnGHcdAbDmsVJ8Bk1zAWPA43CYcqgldjrOYEvZElQ5I2V1s6ivzu1LhN2cUigxPKKQGQ==}

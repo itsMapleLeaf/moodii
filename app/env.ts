@@ -10,6 +10,9 @@ const envSchema = object({
   TWITTER_CLIENT_ID: string(),
   TWITTER_CLIENT_SECRET: string(),
   TWITTER_CALLBACK_URL: string(),
+  DISCORD_CLIENT_ID: string(),
+  DISCORD_CLIENT_SECRET: string(),
+  DISCORD_CALLBACK_URL: string(),
 }).passthrough()
 
 export const env = envSchema.parse(process.env)
