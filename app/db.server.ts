@@ -30,27 +30,40 @@ export async function upsertUser(
 export type Mood = {
   id: string
   value: number
+  createdAt: string
 }
 
-export async function createMood(userId: string, value: number): Promise<Mood> {
-  return prisma.mood.create({
+const serializeMood = (m: {
+  id: string
+  value: number
+  createdAt: Date
+}): { createdAt: string; id: string; value: number } => ({
+  ...m,
+  createdAt: m.createdAt.toISOString(),
+})
+
+export async function createMood(userId: string, value: number): Promise<void> {
+  await prisma.mood.create({
     data: { userId, value },
     select: { id: true, value: true },
   })
 }
 
 export async function getMoods(userId: string): Promise<Mood[]> {
-  return prisma.mood.findMany({
+  const moods = await prisma.mood.findMany({
     where: { userId },
-    select: { id: true, value: true },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, value: true, createdAt: true },
   })
+
+  return moods.map(serializeMood)
 }
 
 export async function getLatestMood(userId: string): Promise<Mood | undefined> {
   const mood = await prisma.mood.findFirst({
     where: { userId },
     orderBy: { createdAt: "desc" },
-    select: { id: true, value: true },
+    select: { id: true, value: true, createdAt: true },
   })
-  return mood ?? undefined
+  return mood ? serializeMood(mood) : undefined
 }
