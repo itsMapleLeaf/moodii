@@ -25,6 +25,7 @@
     "react-icons": "^4.4.0",
     "react-use-measure": "^2.1.1",
     "remix-auth": "^3.2.2",
+    "remix-auth-socials": "^1.0.2",
     "remix-auth-twitter": "^0.1.0",
     "zod": "^3.18.0"
   },

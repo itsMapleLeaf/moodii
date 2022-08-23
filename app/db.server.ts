@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client"
+import { isTruthy } from "./helpers/is-truthy"
+import { omit } from "./helpers/omit"
 
 declare global {
   var prismaClient: PrismaClient | undefined
@@ -11,20 +13,38 @@ export type User = {
   name: string
 }
 
-export async function upsertUser(
-  twitterId: number,
-  name: string,
-): Promise<User> {
-  return (
-    (await prisma.user.findUnique({
-      where: { twitterId },
-      select: { id: true, name: true },
-    })) ??
-    (await prisma.user.create({
-      data: { twitterId, name },
-      select: { id: true, name: true },
-    }))
-  )
+export async function upsertUser(data: {
+  name: string
+  email?: string
+  twitterId?: number
+  discordId?: string
+}): Promise<User> {
+  const conditions = [
+    data.email && { email: data.email },
+    data.twitterId && { twitterId: data.twitterId },
+    data.discordId && { discordId: data.discordId },
+  ].filter(isTruthy)
+
+  const select = {
+    id: true,
+    name: true,
+  }
+
+  const existing = await prisma.user.findFirst({
+    where: { OR: conditions },
+    select,
+  })
+
+  return existing
+    ? await prisma.user.update({
+        where: { id: existing.id },
+        data: omit(data, ["name"]),
+        select,
+      })
+    : await prisma.user.create({
+        data,
+        select,
+      })
 }
 
 export type Mood = {

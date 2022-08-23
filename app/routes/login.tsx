@@ -1,7 +1,8 @@
 import type { LoaderArgs } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Form, useTransition } from "@remix-run/react"
-import { FiHeart, FiTwitter } from "react-icons/fi"
+import clsx from "clsx"
+import { FiHeart, FiMessageCircle, FiTwitter } from "react-icons/fi"
 import { authenticator } from "~/auth.server"
 import { outlineButtonClass } from "~/styles"
 import { Spinner } from "~/ui/spinner"
@@ -25,18 +26,28 @@ export default function Welcome() {
         how you're feeling over time. <FiHeart className="inline-block" />
       </p>
       <div className="flex flex-col items-center gap-4 w-full max-w-xs">
+        <Form method="post" action="/auth/discord/login" className="contents">
+          <button type="submit" className={outlineButtonClass}>
+            <FiMessageCircle />
+            sign in with discord
+          </button>
+        </Form>
         <Form method="post" action="/auth/twitter/login" className="contents">
           <button type="submit" className={outlineButtonClass}>
             <FiTwitter />
             sign in with twitter
           </button>
-          {transition.submission?.action === "/auth/twitter/login" && (
-            <p>
-              <span className="inline-block mr-2">just a moment...</span>
-              <Spinner />
-            </p>
-          )}
         </Form>
+        <p
+          className={clsx(
+            "transition",
+            transition.submission ? "opacity-100" : "opacity-0",
+          )}
+          aria-hidden={!!transition.submission}
+        >
+          <span className="inline-block mr-2">just a moment...</span>
+          <Spinner />
+        </p>
       </div>
     </main>
   )
