@@ -1,7 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Form, Link, useLoaderData } from "@remix-run/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FiHeart, FiLogOut } from "react-icons/fi"
 import useMeasure from "react-use-measure"
 import { authenticator } from "~/auth.server"
@@ -60,6 +60,15 @@ function MoodOverTime({ moods, now }: { moods: Mood[]; now: number }) {
 
   const [rangeOptionIndex, setRangeOptionIndex] = useState(-1)
   const rangeOption = rangeOptions[rangeOptionIndex] ?? rangeOptions[3]
+
+  useEffect(() => {
+    const storedValue = Number(localStorage.getItem("rangeOptionIndex"))
+    if (Number.isInteger(storedValue)) setRangeOptionIndex(storedValue)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("rangeOptionIndex", String(rangeOptionIndex))
+  })
 
   const lowestMood = Math.min(...moods.map((m) => m.value))
   const highestMood = Math.max(...moods.map((m) => m.value))
