@@ -4,6 +4,7 @@ import { Form, useTransition } from "@remix-run/react"
 import { FiHeart, FiTwitter } from "react-icons/fi"
 import { authenticator } from "~/auth.server"
 import { outlineButtonClass } from "~/styles"
+import { Spinner } from "~/ui/spinner"
 
 export async function loader({ request }: LoaderArgs) {
   if (await authenticator.isAuthenticated(request)) {
@@ -32,11 +33,7 @@ export default function Welcome() {
           {transition.submission?.action === "/auth/twitter/login" && (
             <p>
               <span className="inline-block mr-2">just a moment...</span>
-              <span className="inline-grid grid-cols-2 w-4 h-4 gap-0.5 animate-spin align-middle">
-                {Array.from({ length: 4 }, (_, i) => (
-                  <span key={i} className="rounded-full bg-white" />
-                ))}
-              </span>
+              <Spinner />
             </p>
           )}
         </Form>

@@ -14,4 +14,13 @@ model User {
   id        String @id @default(cuid())
   name      String
   twitterId Int?   @unique
+  moods     Mood[]
+}
+
+model Mood {
+  id        String   @id @default(cuid())
+  value     Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
 }
