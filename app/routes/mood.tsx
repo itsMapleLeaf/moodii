@@ -1,6 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Form, useLocation, useTransition } from "@remix-run/react"
+import clsx from "clsx"
 import { Fragment, useState } from "react"
 import { object, string } from "zod"
 import { authenticator } from "~/auth.server"
@@ -80,12 +81,18 @@ export default function MoodPage() {
           </div>
           <p>way better 😌</p>
         </div>
-        {moodSet && (
-          <button type="submit" className={outlineButtonClass}>
+        <div
+          className={clsx("transition", moodSet ? "opacity-100" : "opacity-0")}
+        >
+          <button
+            type="submit"
+            className={outlineButtonClass}
+            disabled={!moodSet}
+          >
             submit{" "}
             {transition.submission?.action === location.pathname && <Spinner />}
           </button>
-        )}
+        </div>
       </Form>
     </main>
   )
