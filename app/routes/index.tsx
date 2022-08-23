@@ -18,7 +18,7 @@ export default function Index() {
       <Form method="post" action="/auth/logout" className="contents">
         <button type="submit" className={outlineButtonClass}>
           <FiLogOut />
-          log out
+          sign out
         </button>
       </Form>
     </main>
@@ -42,7 +42,7 @@ function Welcome() {
         <Form method="post" action="/auth/twitter/login" className="contents">
           <button type="submit" className={outlineButtonClass}>
             <FiTwitter />
-            log in with twitter
+            sign in with twitter
           </button>
           {transition.submission?.action === "/auth/twitter/login" && (
             <p>
