@@ -1,6 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Form, Link, useLoaderData } from "@remix-run/react"
+import { useState } from "react"
 import { FiHeart, FiLogOut } from "react-icons/fi"
 import useMeasure from "react-use-measure"
 import { authenticator } from "~/auth.server"
@@ -48,18 +49,51 @@ function MoodOverTime({ moods, now }: { moods: Mood[]; now: number }) {
   const oneSecond = 1000
   const oneMinute = oneSecond * 60
   const oneHour = oneMinute * 60
-  const oneDay = oneHour * 24
+
+  const rangeOptions = [
+    { label: "1y", value: oneHour * 24 * 365 },
+    { label: "1m", value: oneHour * 24 * 30 },
+    { label: "1w", value: oneHour * 24 * 7 },
+    { label: "1d", value: oneHour * 24 },
+    { label: "1h", value: oneHour },
+  ] as const
+
+  const [rangeOptionIndex, setRangeOptionIndex] = useState(-1)
+  const rangeOption = rangeOptions[rangeOptionIndex] ?? rangeOptions[3]
 
   const lowestMood = Math.min(...moods.map((m) => m.value))
   const highestMood = Math.max(...moods.map((m) => m.value))
 
   const points = moods.map((mood) => {
-    const x = 1 - (now - new Date(mood.createdAt).valueOf()) / oneDay
+    const x = 1 - (now - new Date(mood.createdAt).valueOf()) / rangeOption.value
     const y = lerp(0.1, 0.9, lerpInverse(highestMood, lowestMood, mood.value))
     return { x, y }
   })
 
-  return <LineGraph points={points} />
+  return (
+    <section className="border border-current/50 rounded-lg overflow-clip divide-y">
+      <div className="w-full h-40">
+        <LineGraph points={points} />
+      </div>
+      <div className="grid grid-flow-col auto-cols-fr divide-x">
+        {rangeOptions.map((option, index) => (
+          <label key={option.label} className="relative">
+            <input
+              type="radio"
+              name="range"
+              value={option.value}
+              checked={index === rangeOptionIndex}
+              onChange={() => setRangeOptionIndex(index)}
+              className="appearance-none block absolute inset-0 [&:not(:checked)]:hover:bg-blue-500/25 checked:bg-blue-500/50 cursor-pointer transition"
+            />
+            <span className="relative p-3 text-xs leading-none pointer-events-none">
+              {option.label}
+            </span>
+          </label>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 type Point = {
@@ -85,10 +119,8 @@ function LineGraph({ points: pointsProp }: { points: Point[] }) {
   const lastPoint = last(points)
 
   return (
-    <section
-      className="border border-current/50 w-full h-40 rounded-lg overflow-clip"
-      ref={ref}
-    >
+    // if the ref goes on the svg element, it doesn't get measured immediately (????)
+    <div className="w-full h-full" ref={ref}>
       <svg className="w-full h-full">
         <polygon
           points={[
@@ -106,6 +138,6 @@ function LineGraph({ points: pointsProp }: { points: Point[] }) {
           strokeWidth={1}
         />
       </svg>
-    </section>
+    </div>
   )
 }
