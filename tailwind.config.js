@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin")
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{ts,tsx}"],
@@ -8,5 +10,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addBase }) => {
+      addBase({
+        button: {
+          textAlign: "inherit",
+        },
+      })
+    }),
+  ],
 }

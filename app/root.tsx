@@ -27,14 +27,15 @@ export default function App() {
   return (
     <html
       lang="en"
-      className="bg-gradient-to-b from-fuchsia-800 to-indigo-800 h-full text-fuchsia-100 font-sans"
+      className="bg-gradient-to-b from-fuchsia-800 to-indigo-800 min-h-screen text-fuchsia-100 font-sans overflow-x-hidden"
+      style={{ wordBreak: "break-word" }}
     >
       <head>
         <Meta />
         <Links />
       </head>
-      <body className="h-full flex flex-col">
-        <div className="m-auto p-6">
+      <body className="min-h-screen flex flex-col pt-8 px-8 pb-4 gap-4">
+        <div className="m-auto">
           <Outlet />
         </div>
         <footer className="p-2 text-center opacity-50 text-xs">
