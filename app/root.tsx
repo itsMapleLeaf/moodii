@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react"
+import { FiHeart } from "react-icons/fi"
 import tailwindCss from "./tailwind.css"
 
 export const meta: MetaFunction = () => ({
@@ -39,14 +40,23 @@ export default function App() {
           <Outlet />
         </div>
         <footer className="p-2 text-center opacity-50 text-xs">
-          &copy; {new Date().getFullYear()}{" "}
+          made with <FiHeart className="inline-block" /> by{" "}
           <a
             href="https://mapleleaf.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="border-b hover:border-b-0"
           >
-            itsMapleLeaf
+            mapleleaf
+          </a>{" "}
+          •{" "}
+          <a
+            href="https://github.com/itsMapleLeaf/moodii"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-b hover:border-b-0"
+          >
+            source
           </a>
         </footer>
         <ScrollRestoration />
